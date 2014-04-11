@@ -31,14 +31,13 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private Button newButton;
     private Button startButton;
     private Button stopButton;
-    private Button saveButton;
 
     private TextView nameTv;
     private TextView xyzTv;
     private TextView infoTv;
     private TextView saveTv;
 
-    private String filename;
+    private String letter; 		// letter we're recording
     private StringBuilder dataBuffer;	// saves what we'll write to file
     private int lineCnt;
 
@@ -63,7 +62,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 	newButton = (Button) findViewById(R.id.newButton);
 	startButton = (Button) findViewById(R.id.startButton);
 	stopButton = (Button) findViewById(R.id.stopButton);
-	saveButton = (Button) findViewById(R.id.saveButton);
 
 	nameTv = (TextView) findViewById(R.id.filenameTextview);
 	xyzTv = (TextView) findViewById(R.id.xyzTextview);
@@ -113,13 +111,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 		infoTv.setText(msg);
 		
 		xyzTv.setText("");
-	    }
-	});
-
-	saveButton.setOnClickListener(new OnClickListener() {
-	    @Override
-	    public void onClick(View arg0) {
-		// writes out databuffer content to file
+		
+		// write to file here already
 		writeFile();
 	    }
 	});
@@ -169,10 +162,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 	    @Override
 	    public void onClick(DialogInterface dialog, int which) {
 		// adding timestamp to filename
-		Long tsLong = System.currentTimeMillis()/1000;
-		String ts = tsLong.toString();
-		filename = input.getText().toString() + "_" + ts +  ".csv";
-		nameTv.setText("Filename: " + filename);
+		letter = input.getText().toString();
+		nameTv.setText("Recording for letter: " + letter);
 		xyzTv.setText("");
 		infoTv.setText("");
 		saveTv.setText("");
@@ -196,7 +187,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 	    if (!dir.exists() && dir.mkdirs()) {
 		Log.w("jenny", "successfully created directory");
 	    }
-	    
+
+	    Long tsLong = System.currentTimeMillis()/1000;
+	    String ts = tsLong.toString();
+	    String filename = letter + "_" + ts +  ".csv";
+
 	    File file = new File(dir, filename);
 	    
 	    if (file.exists()) {
