@@ -156,7 +156,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private void displayFilenameForm() {
 	// AlertDialog to enter filename
 	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	builder.setTitle("Filename (don't add .csv!)");
+	builder.setTitle("Enter the letter to record");
 
 	// Set up the input
 	final EditText input = new EditText(this);
