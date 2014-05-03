@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private String letter; 		// letter we're recording
     private StringBuilder dataBuffer;	// saves what we'll write to file
     private int lineCnt;
+    private int count;		// number of times same letter was recorded
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -78,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 	    public void onClick(View arg0) {
 		// set filename and empty other views
 		displayFilenameForm();
+		count = 0;
 	    }
 	});
 
@@ -85,10 +87,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 	    @Override
 	    public void onClick(View arg0) {
 		// empties databuffer and turns on sensor recording
+		count++;
 		status = REC_STARTED;
 		dataBuffer = new StringBuilder();
 		lineCnt = 0;
-		xyzTv.setText("recording ...");
+		xyzTv.setText("recording ...\t count: " + count);
 	    }
 	});
 
